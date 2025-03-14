@@ -1,0 +1,100 @@
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.stream.Collectors;
+
+public class NinjaService {
+
+    public void insertNinjaAtBeginning(LinkedList<Ninja> listNinjas, Ninja ninja) {
+        listNinjas.addFirst(ninja);
+    }
+
+    public void removeFirstNinja(LinkedList<Ninja> listNinjas) {
+        listNinjas.pollFirst();
+    }
+
+    public void removeNinjaByName(LinkedList<Ninja> listNinjas, String name) {
+        listNinjas.removeIf(ninja -> ninja.getName().contains(name));
+    }
+
+    public void removeNinjasByAge(LinkedList<Ninja> listNinjas, int age) {
+        listNinjas.removeIf(ninja -> ninja.getAge() == age);
+    }
+
+    public void removeNinjaByVillage(LinkedList<Ninja> listNinjas, String village) {
+        listNinjas.removeIf(ninja -> ninja.getVillage().contains(village));
+    }
+
+    public Ninja getNinjaFromListByIndex(LinkedList<Ninja> listNinjas, int indexNinja) {
+        return listNinjas.get(indexNinja);
+    }
+
+    public <T> LinkedList<Ninja> getNinjasByCriteria(LinkedList<Ninja> listNinjas, T criteria) {
+        if(criteria instanceof String criteriaString) {
+            return getNinjasByNameOrVillage(listNinjas, criteriaString);
+        } else if(criteria instanceof Integer criteriaInt)  {
+            return getNinjasByAge(listNinjas, criteriaInt);
+        }
+        return new LinkedList<>();
+    }
+
+    public LinkedList<Ninja> getNinjasByNameOrVillage(LinkedList<Ninja> listNinjas, String criteria) {
+
+        return listNinjas.stream()
+                .filter(ninja ->
+                            (ninja.getName() != null && ninja.getName().toLowerCase().contains(criteria.toLowerCase())) ||
+                            (ninja.getVillage() != null && ninja.getVillage().toLowerCase().contains(criteria.toLowerCase())))
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public LinkedList<Ninja> getNinjasByName(LinkedList<Ninja> listNinjas, String name) {
+
+        return listNinjas.stream()
+                        .filter(ninja -> ninja.getName().contains(name))
+                        .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public LinkedList<Ninja> getNinjasByVillage(LinkedList<Ninja> listNinjas, String village) {
+
+        return listNinjas.stream()
+                        .filter(ninja -> ninja.getVillage().equalsIgnoreCase(village))
+                        .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public LinkedList<Ninja> getNinjasByAge(LinkedList<Ninja> listNinjas, int age) {
+
+        return listNinjas.stream()
+                        .filter(ninja -> ninja.getAge() == age)
+                        .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public LinkedList<Ninja> getOrderedListByParam(LinkedList<Ninja> listNinjas, SortEnum criteria) {
+
+        switch(criteria) {
+            case NAME -> listNinjas = getOrderedListByName(listNinjas);
+            case AGE -> listNinjas = getOrderedListByAge(listNinjas);
+            case VILLAGE -> listNinjas = getOrderedListByVillage(listNinjas);
+        }
+        return listNinjas;
+    }
+
+    public LinkedList<Ninja> getOrderedListByName(LinkedList<Ninja> listNinjas) {
+
+        return listNinjas.stream()
+                        .sorted(Comparator.comparing(Ninja::getName, String.CASE_INSENSITIVE_ORDER))
+                        .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public LinkedList<Ninja> getOrderedListByAge(LinkedList<Ninja> listNinjas) {
+
+        return listNinjas.stream()
+                .sorted(Comparator.comparing(Ninja::getAge, Integer::compareTo))
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public LinkedList<Ninja> getOrderedListByVillage(LinkedList<Ninja> listNinjas) {
+
+        return listNinjas.stream()
+                .sorted(Comparator.comparing(Ninja::getVillage, String.CASE_INSENSITIVE_ORDER))
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+}
