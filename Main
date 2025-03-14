@@ -1,0 +1,109 @@
+import java.util.LinkedList;
+
+public class Main {
+
+    private static LinkedList<Ninja> listNinjas;
+    private static final NinjaService ninjaService = new NinjaService();
+
+    public static void main(String[] args) {
+        // Popular a lista inicial
+        createNinjaList();
+        System.out.println(listNinjas);
+        System.out.println("A lista de ninjas tem " + listNinjas.size() + " linhas!");
+
+        System.out.println("========================================================");
+
+        // Mostrar um ninja a partir de uma posiçao x
+        System.out.println(ninjaService.getNinjaFromListByIndex(listNinjas, 5));
+
+        System.out.println("========================================================");
+
+        // Inserir um novo ninja na posiçao inicial da lista
+        ninjaService.insertNinjaAtBeginning(listNinjas, new Ninja("Hinata Hyuga", 17, "Konoha"));
+        System.out.println(listNinjas);
+        System.out.println("A lista de ninjas tem " + listNinjas.size() + " linhas!");
+
+        System.out.println("========================================================");
+
+        // Remover o ninja da primeira posiçao da lista
+        ninjaService.removeFirstNinja(listNinjas);
+        System.out.println(listNinjas);
+        System.out.println("A lista de ninjas tem " + listNinjas.size() + " linhas!");
+
+        System.out.println("========================================================");
+
+        // Filtrar lista de ninjas por nome
+        System.out.println(ninjaService.getNinjasByName(listNinjas, "Naruto"));
+
+        System.out.println("========================================================");
+
+        // Filtrar lista de ninjas por vila
+        System.out.println(ninjaService.getNinjasByVillage(listNinjas, "Areia"));
+
+        System.out.println("========================================================");
+
+        // Filtrar lista de ninjas por idade
+        System.out.println(ninjaService.getNinjasByAge(listNinjas, 31));
+
+        System.out.println("========================================================");
+
+        // Remove ninjas da lista por nome
+//        ninjaService.removeNinjaByName(listNinjas, "Naruto");
+//        System.out.println(listNinjas);
+//        System.out.println("A lista de ninjas tem " + listNinjas.size() + " linhas!");
+
+//        System.out.println("========================================================");
+
+        // Remove ninjas da lista por idade
+//        ninjaService.removeNinjasByAge(listNinjas, 17);
+//        System.out.println(listNinjas);
+
+//        System.out.println("========================================================");
+
+        // Remove ninjas da lista por vila
+//        ninjaService.removeNinjaByVillage(listNinjas, "Konoha");
+//        System.out.println(listNinjas);
+
+//        System.out.println("========================================================");
+
+        // Ordena a lista de ninjas por nome
+//        System.out.println(ninjaService.getOrderedListByName(listNinjas));
+//
+//        System.out.println("========================================================");
+
+        // Ordena a lista de ninjas por idade
+//        System.out.println(ninjaService.getOrderedListByAge(listNinjas));
+//
+//        System.out.println("========================================================");
+
+        // Ordena a lista de ninjas por vila
+//        System.out.println(ninjaService.getOrderedListByVillage(listNinjas));
+//
+//        System.out.println("========================================================");
+
+        // Ordena a lista de ninjas por um parametro (seja nome, idade, ou vila)
+        System.out.println(ninjaService.getOrderedListByParam(listNinjas, SortEnum.NAME));
+
+        System.out.println("========================================================");
+
+        // Busca ninjas por um parametro (seja nome, idade, ou vila)
+        System.out.println(ninjaService.getNinjasByCriteria(listNinjas, 17));
+
+        System.out.println("========================================================");
+
+    }
+
+    private static void createNinjaList() {
+
+        listNinjas = new LinkedList<>();
+        listNinjas.add(new Ninja("Naruto Uzumaki", 17, "Konoha"));
+        listNinjas.add(new Ninja("Sasuke Uchiha", 17, "Konoha"));
+        listNinjas.add(new Ninja("Sakura Haruno", 17, "Konoha"));
+        listNinjas.add(new Ninja("Kakashi Hatake", 31, "Konoha"));
+        listNinjas.add(new Ninja("Gaara", 17, "Areia"));
+        listNinjas.add(new Ninja("Shikamaru Nara", 17, "Konoha"));
+        listNinjas.add(new Ninja("Temari", 18, "Areia"));
+        listNinjas.add(new Ninja("Itachi Uchiha", 22, "Konoha"));
+
+    }
+}
